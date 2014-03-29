@@ -1,0 +1,22 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameBase\Grids.cs">
+    <Files>
+      <File FileName="Assets\Scripts\MoveControl.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\2d_unity_demo\Assets\Scripts\PlayerControl.cs" Line="8" Column="2" />
+      <File FileName="..\..\..\2d_unity_demo\Assets\Scripts\Pauser.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\2d_unity_demo\Assets\Scripts\BackgroundParallax.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\2d_unity_demo\Assets\Scripts\BackgroundPropSpawner.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\2d_unity_demo\Assets\Scripts\Rocket.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\2d_unity_demo\Assets\Scripts\Remover.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\2d_unity_demo\Assets\Scripts\Gun.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameBase\Grids.cs" Line="55" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="H:\TYYJ\project\client\Assets\Scripts\MoveControl.cs" line="21" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
