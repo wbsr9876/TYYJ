@@ -7,17 +7,11 @@ public class MoveControl : MonoBehaviour {
 	[HideInInspector]
 	private bool m_bDragging = false;
 	private Vector3 m_oldPos;
-
-	private Grids m_sceneGrids;
+	private GameObject m_background;
 	// Use this for initialization
 	void Start () 
 	{
-		GameObject myBackground = GameObject.FindWithTag("background");
-		if(myBackground)
-		{
-			GridsControl gc = myBackground.GetComponent<GridsControl>();
-			m_sceneGrids = gc.m_grids;
-		}
+		m_background = GameObject.FindWithTag("background");
 	}
 	
 	// Update is called once per frame
@@ -34,24 +28,28 @@ public class MoveControl : MonoBehaviour {
 	void OnMouseDown()
 	{
 		m_oldPos = transform.position;
-		//print("Down Pos:" + m_oldPos);
+		print("Down Pos:" + m_oldPos);
 		m_bDragging = true;
 	}
 
 	void OnMouseUp()
 	{
-		m_bDragging = false;
-		Rect rect = m_sceneGrids.GetGrid(transform.position);
-		Vector3 newPos;
-		if(rect.width < 0.1)
+		m_bDragging = false; 
+		if(m_background)
 		{
-			newPos = m_oldPos;
+			GridsControl gc = m_background.GetComponent<GridsControl>();
+			Rect rect = gc.m_grids.GetGrid(transform.position);
+			Vector3 newPos;
+			if(rect.width < 0.1)
+			{
+				newPos = m_oldPos;
+			}
+			else
+			{
+				newPos = new Vector3(rect.center.x,rect.center.y);
+			}
+			print("Up Pos:" + m_oldPos);
+			transform.Translate(newPos - transform.position,Space.World);
 		}
-		else
-		{
-			newPos = new Vector3(rect.center.x,rect.center.y);
-		}
-		//print("Up Pos:" + m_oldPos);
-		transform.Translate(newPos - transform.position,Space.World);
 	}
 }
