@@ -1,0 +1,157 @@
+fileFormatVersion: 2
+guid: 6eb0682013875294ebac66e925efe3a3
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: OldMan_Attack1_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 400
+        width: 39
+        height: 79
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_1
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 400
+        width: 43
+        height: 79
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_2
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 400
+        width: 41
+        height: 75
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_3
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 400
+        width: 47
+        height: 67
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_4
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 400
+        width: 52
+        height: 62
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 208
+        width: 55
+        height: 59
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_6
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 208
+        width: 174
+        height: 98
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: OldMan_Attack1_8
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 208
+        width: 177
+        height: 84
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_9
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 208
+        width: 174
+        height: 69
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_10
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 208
+        width: 181
+        height: 65
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_11
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 16
+        width: 183
+        height: 60
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: OldMan_Attack1_12
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 16
+        width: 183
+        height: 60
+      alignment: 7
+      pivot: {x: 0, y: 0}
+  spritePackingTag: 
+  userData: 

@@ -1,0 +1,157 @@
+fileFormatVersion: 2
+guid: a1787e0b558f04e42ae7a0c99d4734cb
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: Fire2_0
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 424
+        width: 120
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_1
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 407
+        width: 146
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_2
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 403
+        width: 151
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_3
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 400
+        width: 157
+        height: 164
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_4
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 398
+        width: 163
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_5
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 205
+        width: 167
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_6
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 204
+        width: 170
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_7
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 205
+        width: 170
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_8
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 205
+        width: 171
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_9
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 204
+        width: 173
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_10
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 17
+        width: 162
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: Fire2_11
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 28
+        width: 142
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+  spritePackingTag: 
+  userData: 
