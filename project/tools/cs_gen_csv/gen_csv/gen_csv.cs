@@ -23,7 +23,7 @@ namespace gen_csv
         private static extern int GetPrivateProfileString(string section, string key, string def, System.Text.StringBuilder retVal, int size, string filePath);
 
 
-        private string m_strServerPath;
+        private string m_strProjectPath;
 
         const int cst_RowForChineseName = 0;
         const int cst_RowForName = 1;
@@ -38,9 +38,9 @@ namespace gen_csv
             StringBuilder temp = new StringBuilder(255);
             GetPrivateProfileString("ServerPathInfo", "Path", "E:\\workspace\\pwngs\\server", temp, 255, ".\\gen_csv.ini");
             
-            m_strServerPath = temp.ToString();
+            m_strProjectPath = temp.ToString();
             
-            textBox.Text = m_strServerPath;
+            textBox.Text = m_strProjectPath;
         }
 
         void ShowMessage(string table,string sheet,int row,int col,string error)
@@ -169,25 +169,25 @@ namespace gen_csv
         private void button_Click(object sender, EventArgs e)
         {
             string strSearchDir;
-            string strCppsDir;
+            string strCssDir;
             string strCsvsDir;
 
-            m_strServerPath = textBox.Text;
+            m_strProjectPath = textBox.Text;
 
-            if(m_strServerPath.Length <= 0)
+            if(m_strProjectPath.Length <= 0)
             {
                 MessageBox.Show("Invalid Input");
                 return;
             }
 
-            if(m_strServerPath.Substring(m_strServerPath.Length-1,1) != "\\")
+            if(m_strProjectPath.Substring(m_strProjectPath.Length-1,1) != "\\")
             {
-                m_strServerPath += "\\";
+                m_strProjectPath += "\\";
             }
 
-            strSearchDir = m_strServerPath + "..\\shared\\config\\";
-            strCppsDir = m_strServerPath + "pwworldsrv\\conf\\";
-            strCsvsDir = m_strServerPath + "bin\\data\\csv\\";
+            strSearchDir = m_strProjectPath + "config\\";
+            strCssDir = m_strProjectPath + "client\\Assets\\Scripts\\ConfigData\\";
+            strCsvsDir = m_strProjectPath + "client\\Assets\\Data\\";
 
             if (!Directory.Exists(strSearchDir))
             {
@@ -195,9 +195,9 @@ namespace gen_csv
                 return;
             }
 
-            if (!Directory.Exists(strCppsDir))
+            if (!Directory.Exists(strCssDir))
             {
-                Directory.CreateDirectory(strCppsDir);
+                Directory.CreateDirectory(strCssDir);
             }
 
             if (!Directory.Exists(strCsvsDir))
@@ -229,23 +229,24 @@ namespace gen_csv
                     name = name.Substring(0, name.Length - str.Length);
                 }
 
-                string hppfile = strCppsDir + "pwconf_" + name + ".h";
-                string cppfile = strCppsDir + "pwconf_" + name + ".cpp";
-                string csvfile = strCsvsDir + "pwconf_" + name + ".csv";
+                //string hppfile = strCppsDir + "pwconf_" + name + ".h";
+                //string cppfile = strCppsDir + "pwconf_" + name + ".cpp";
+                string csvfile = strCsvsDir + "Config" + name + ".csv";
+                string csfile = strCssDir + "Config" + name + ".cs";
 
-                Generate(name, file, hppfile, cppfile, csvfile);
+                Generate(name, file, csfile, csvfile);
 
                 string filepath = Path.GetFullPath(file);
                 string log = "Generated : " + filepath;
                 listBox.Items.Add(log.ToString());
             }
 
-            textBox.Text = m_strServerPath;
-            WritePrivateProfileString("ServerPathInfo", "Path", m_strServerPath, ".\\gen_csv.ini");
+            textBox.Text = m_strProjectPath;
+            WritePrivateProfileString("ServerPathInfo", "Path", m_strProjectPath, ".\\gen_csv.ini");
             listBox.Items.Add("Generate Completed.");
         }
 
-        void Generate(string name, string file, string hpp_file, string cpp_file, string csv_file)
+        void Generate(string name, string file, string cs_file/*string hpp_file, string cpp_file*/, string csv_file)
         {
             File.Delete(csv_file);
 
@@ -269,16 +270,18 @@ namespace gen_csv
                 {
                     GenerateCsvHeader(s, writer,name);
 
-                    if (File.Exists(hpp_file) && File.Exists(cpp_file))
+                    if (File.Exists(cs_file))
                     {
                         //TODO::log
-                        string log = "Ignore generate(Hpp,Cpp): " + name;
+                        File.Delete(cs_file);
+                        string log = "delete(CS): " + name;
                         listBox.Items.Add(log.ToString());
                     }
-                    else
+                    //else
                     {
-                        GenerateHpp(s, hpp_file, name);
-                        GenerateCpp(s, cpp_file, name);
+                        GenerateCs(s, cs_file, name);
+                        //GenerateHpp(s, hpp_file, name);
+                        //GenerateCpp(s, cpp_file, name);
                     }
                 }
                 GenerateCsv(s,writer,name);
@@ -427,7 +430,127 @@ namespace gen_csv
             writer.Close();
             stream.Close();
         }
+        void GenerateCs(Sheet sheet, string cs_file, string name)
+        {
+            if (File.Exists(cs_file))
+                File.Delete(cs_file);
+            FileStream stream = new FileStream(cs_file, FileMode.CreateNew);
+            StreamWriter writer = new StreamWriter(stream, Encoding.Default);
 
+            string structname = "Data" + name;
+            string filename = Path.GetFileName(cs_file);
+            string classname = name;
+
+            W2F(0, writer, "using System.Collections.Generic;");
+            W2F(0, writer, "");
+            W2F(0, writer, "namespace ConfigData");
+
+            W2F(0, writer, "{");
+            W2F(0, writer, "");
+            W2F(1, writer, "public class " + structname);
+            W2F(1, writer, "{");
+            for (int i = 0; i < sheet.getColumns(); ++i)
+            {
+                string colname = GetStringFromCell(sheet, cst_RowForName, i, name);
+                string typname = GetStringFromCell(sheet, cst_RowForType, i, name);
+                string cnname = GetStringFromCell(sheet, cst_RowForChineseName, i, name);
+
+                if (typname.Equals("int"))
+                    W2F(2, writer, "int " + colname + ";\t// " + cnname);
+                else if (typname.Equals("long"))
+                    W2F(2, writer, "long " + colname + ";\t// " + cnname);
+                else if (typname.Equals("float"))
+                    W2F(2, writer, "float " + colname + ";\t// " + cnname);
+                else if (typname.Equals("double"))
+                    W2F(2, writer, "double " + colname + ";\t// " + cnname);
+                else if (typname.Equals("string"))
+                    W2F(2, writer, "string " + colname + ";\t// " + cnname);
+                else if (typname.Equals("bool"))
+                    W2F(2, writer, "bool " + colname + ";\t// " + cnname);
+                /*else if(typname.Equals("string[]"))
+                    W2F(2,writer,"std::vector<std::string> " + colname + ";\t// " + cnname);
+                else if(typname.Equals("float[]"))
+                    W2F(2,writer,"std::vector<float> " + colname + ";\t// " + cnname);
+                else if(typname.Equals("int[]"))
+                    W2F(2,writer,"std::vector<int32> " + colname + ";\t// " + cnname);*/
+                else if (typname.Contains("string["))
+                {
+                    if (typname.Equals("string[]"))
+                    {
+                        W2F(2, writer, "List<string> " + colname + ";\t// " + cnname);
+                    }
+                    else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
+                    {
+                        int val = int.Parse(typname.Substring(7, typname.Length - 8));
+
+                        W2F(2, writer, "string " + colname + "[" + val + "]" + ";\t// " + cnname);
+                    }
+                }
+                else if (typname.Contains("float["))
+                {
+                    if (typname.Equals("float[]"))
+                    {
+                        W2F(2, writer, "List<float> " + colname + ";\t// " + cnname);
+                    }
+                    else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
+                    {
+                        int val = int.Parse(typname.Substring(6, typname.Length - 7));
+
+                        W2F(2, writer, "float " + colname + "[" + val + "]" + ";\t// " + cnname);
+                    }
+                }
+                else if (typname.Contains("int["))
+                {
+                    if (typname.Equals("int[]"))
+                    {
+                        W2F(2, writer, "List<int> " + colname + ";\t// " + cnname);
+                    }
+                    else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
+                    {
+                        int val = int.Parse(typname.Substring(4, typname.Length - 5));
+
+                        W2F(2, writer, "int " + colname + "[" + val + "]" + ";\t// " + cnname);
+                    }
+                }
+                else if (typname.Equals(""))
+                    continue;
+                else
+                    ShowMessage(name, sheet.getName(), cst_RowForType, i, "invalid_configure");
+            }
+            W2F(1, writer, "};");
+            W2F(1, writer, "");
+
+            W2F(1, writer, "/* ");
+            W2F(1, writer, "@class " + name + " ");
+            W2F(1, writer, "@author tool GenCSV");
+            W2F(1, writer, "@date " + DateTime.Now.ToString());
+            W2F(1, writer, "@file " + filename);
+            W2F(1, writer, "@brief 从" + name + "文件中自动生成的配置类");
+            W2F(1, writer, "*/ ");
+
+            W2F(1, writer, "public class " + name);
+            W2F(1, writer, "{");
+            W2F(2, writer, "public bool LoadFrom(string filename)");
+            W2F(2, writer, "{");
+            W2F(3, writer, "return false;");
+            //W2F(3, writer, "return LoadFrom(filename.c_str());");
+            W2F(2, writer, "}");
+            W2F(2, writer, "public " + structname + " Get(int row)");
+            W2F(2, writer, "{");
+            W2F(3, writer, "return m_vtConfigures[row];");
+            W2F(2, writer, "}");
+            W2F(2, writer, "public int Count()");
+            W2F(2, writer, "{");
+            W2F(3, writer, "return m_vtConfigures.Count();");
+            W2F(2, writer, "}");
+            W2F(2, writer, "private List<" + structname + "> m_vtConfigures;");
+            W2F(1, writer, "};");
+
+            W2F(0, writer, "}");
+
+            writer.Close();
+            stream.Close();
+        }
         void GenerateCpp(Sheet sheet, string cpp_file, string name)
         {
             if (File.Exists(cpp_file))
