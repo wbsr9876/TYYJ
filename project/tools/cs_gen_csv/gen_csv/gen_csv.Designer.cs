@@ -49,9 +49,9 @@
             this.label.AutoSize = true;
             this.label.Location = new System.Drawing.Point(12, 27);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(65, 12);
+            this.label.Size = new System.Drawing.Size(71, 12);
             this.label.TabIndex = 1;
-            this.label.Text = "server目录";
+            this.label.Text = "project目录";
             // 
             // textBox
             // 
