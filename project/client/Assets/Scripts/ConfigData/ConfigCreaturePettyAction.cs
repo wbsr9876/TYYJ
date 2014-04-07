@@ -15,7 +15,7 @@ namespace ConfigData
 	/* 
 	@class CreaturePettyAction 
 	@author tool GenCSV
-	@date 2014/4/7 2:52:04
+	@date 2014/4/7 10:43:51
 	@file ConfigCreaturePettyAction.cs
 	@brief 从CreaturePettyAction文件中自动生成的配置类
 	*/ 
@@ -31,8 +31,9 @@ namespace ConfigData
 		}
 		public int Count()
 		{
-			return m_vtConfigures.Count();
+			return m_vtConfigures.Count;
 		}
 		private List<DataCreaturePettyAction> m_vtConfigures;
 	};
 }
+

@@ -541,12 +541,13 @@ namespace gen_csv
             W2F(2, writer, "}");
             W2F(2, writer, "public int Count()");
             W2F(2, writer, "{");
-            W2F(3, writer, "return m_vtConfigures.Count();");
+            W2F(3, writer, "return m_vtConfigures.Count;");
             W2F(2, writer, "}");
             W2F(2, writer, "private List<" + structname + "> m_vtConfigures;");
             W2F(1, writer, "};");
 
             W2F(0, writer, "}");
+            W2F(0, writer, "");
 
             writer.Close();
             stream.Close();
