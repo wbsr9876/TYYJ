@@ -8,7 +8,7 @@ public class GridsControl : MonoBehaviour {
 	public Grids m_grids;
 
 	// Use this for initialization
-	void Start () 
+	void Awake () 
 	{
 		//貌似是局部坐标系的问题，暂时不用这种替代方式，反正最后是要单独创建网格的
 		//BoxCollider2D test = this.GetComponent<BoxCollider2D>();

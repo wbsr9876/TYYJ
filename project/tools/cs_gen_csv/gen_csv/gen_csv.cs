@@ -25,8 +25,8 @@ namespace gen_csv
 
         private string m_strProjectPath;
 
-        const int cst_RowForChineseName = 0;
-        const int cst_RowForName = 1;
+        const int cst_RowForChineseName = 1;
+        const int cst_RowForName = 0;
         const int cst_RowForType = 2;
         const int cst_RowForSide = 3;
         const int cst_RowForData = cst_RowForSide + 1;
@@ -435,13 +435,18 @@ namespace gen_csv
             if (File.Exists(cs_file))
                 File.Delete(cs_file);
             FileStream stream = new FileStream(cs_file, FileMode.CreateNew);
-            StreamWriter writer = new StreamWriter(stream, Encoding.Default);
+            StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
 
             string structname = "Data" + name;
             string filename = Path.GetFileName(cs_file);
             string classname = name;
 
             W2F(0, writer, "using System.Collections.Generic;");
+            W2F(0, writer, "using System.IO;");
+            W2F(0, writer, "using System.Data;");
+            W2F(0, writer, "using System.Runtime.InteropServices;");
+            W2F(0, writer, "using LumenWorks.Framework.IO.Csv;");
+            
             W2F(0, writer, "");
             W2F(0, writer, "namespace ConfigData");
 
@@ -456,62 +461,64 @@ namespace gen_csv
                 string cnname = GetStringFromCell(sheet, cst_RowForChineseName, i, name);
 
                 if (typname.Equals("int"))
-                    W2F(2, writer, "int " + colname + ";\t// " + cnname);
+                    W2F(2, writer, "public int " + colname + ";\t// " + cnname);
                 else if (typname.Equals("long"))
-                    W2F(2, writer, "long " + colname + ";\t// " + cnname);
+                    W2F(2, writer, "public long " + colname + ";\t// " + cnname);
                 else if (typname.Equals("float"))
-                    W2F(2, writer, "float " + colname + ";\t// " + cnname);
+                    W2F(2, writer, "public float " + colname + ";\t// " + cnname);
                 else if (typname.Equals("double"))
-                    W2F(2, writer, "double " + colname + ";\t// " + cnname);
+                    W2F(2, writer, "public double " + colname + ";\t// " + cnname);
                 else if (typname.Equals("string"))
-                    W2F(2, writer, "string " + colname + ";\t// " + cnname);
+                    W2F(2, writer, "public string " + colname + ";\t// " + cnname);
                 else if (typname.Equals("bool"))
-                    W2F(2, writer, "bool " + colname + ";\t// " + cnname);
-                /*else if(typname.Equals("string[]"))
-                    W2F(2,writer,"std::vector<std::string> " + colname + ";\t// " + cnname);
+                    W2F(2, writer, "public bool " + colname + ";\t// " + cnname);
+                else if(typname.Equals("string[]"))
+                    W2F(2,writer,"public string[] " + colname + ";\t// " + cnname);
                 else if(typname.Equals("float[]"))
-                    W2F(2,writer,"std::vector<float> " + colname + ";\t// " + cnname);
+                    W2F(2,writer,"public float[] " + colname + ";\t// " + cnname);
                 else if(typname.Equals("int[]"))
-                    W2F(2,writer,"std::vector<int32> " + colname + ";\t// " + cnname);*/
+                    W2F(2,writer,"public int[] " + colname + ";\t// " + cnname);
+                    /*
                 else if (typname.Contains("string["))
                 {
                     if (typname.Equals("string[]"))
                     {
-                        W2F(2, writer, "List<string> " + colname + ";\t// " + cnname);
+                        W2F(2, writer, "public string[] " + colname + ";\t// " + cnname);
                     }
                     else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
                     {
                         int val = int.Parse(typname.Substring(7, typname.Length - 8));
 
-                        W2F(2, writer, "string " + colname + "[" + val + "]" + ";\t// " + cnname);
+                        W2F(2, writer, "public string " + colname + "[" + val + "]" + ";\t// " + cnname);
                     }
                 }
                 else if (typname.Contains("float["))
                 {
                     if (typname.Equals("float[]"))
                     {
-                        W2F(2, writer, "List<float> " + colname + ";\t// " + cnname);
+                        W2F(2, writer, "public List<float> " + colname + ";\t// " + cnname);
                     }
                     else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
                     {
                         int val = int.Parse(typname.Substring(6, typname.Length - 7));
 
-                        W2F(2, writer, "float " + colname + "[" + val + "]" + ";\t// " + cnname);
+                        W2F(2, writer, "public float " + colname + "[" + val + "]" + ";\t// " + cnname);
                     }
                 }
                 else if (typname.Contains("int["))
                 {
                     if (typname.Equals("int[]"))
                     {
-                        W2F(2, writer, "List<int> " + colname + ";\t// " + cnname);
+                        W2F(2, writer, "public List<int> " + colname + ";\t// " + cnname);
                     }
                     else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
                     {
                         int val = int.Parse(typname.Substring(4, typname.Length - 5));
 
-                        W2F(2, writer, "int " + colname + "[" + val + "]" + ";\t// " + cnname);
+                        W2F(2, writer, "public int " + colname + "[" + val + "]" + ";\t// " + cnname);
                     }
                 }
+                     */
                 else if (typname.Equals(""))
                     continue;
                 else
@@ -532,7 +539,160 @@ namespace gen_csv
             W2F(1, writer, "{");
             W2F(2, writer, "public bool LoadFrom(string filename)");
             W2F(2, writer, "{");
-            W2F(3, writer, "return false;");
+            W2F(3, writer, "CsvReader csv = new CsvReader(new StreamReader(filename),true,'\\t','\\\"','\\0','#',ValueTrimmingOptions.All);");
+			        //W2F(2, writer, "if(csv.load(filename) != 0)");
+                       // W2F(3, writer, "return false;");
+                    for (int col = 0; col < sheet.getColumns(); ++col)
+                    {
+                        string colname = GetStringFromCell(sheet, cst_RowForName, col, name);
+                        string cnname = GetStringFromCell(sheet, cst_RowForChineseName, col, name);
+
+                        if (colname.Equals("") || cnname.Equals(""))
+                            continue;
+
+                        W2F(3, writer, "int index_" + colname + " = csv.GetFieldIndex(\"" + colname + "\");");
+				        //W2F(2, writer, "pwassertn(index_" + colname + " != (size_t)-1);");
+				        W2F(3, writer, "");
+                    }
+                    W2F(3, writer, "");
+                    W2F(3, writer, "IDataReader read = csv;");
+                    for (int i = 0;i < cst_RowForData - 1;i++)
+                    {
+                        W2F(3, writer, "read.Read();");
+                    }
+			        //W2F(2, writer, "for(size_t row = " + (cst_RowForData-1).ToString() + "; row < csv.count(); ++row)");
+                    W2F(3, writer, "while(read.Read())");
+			        W2F(3, writer, "{");
+                        W2F(4, writer, structname + " conf = new " + structname + "();");
+                        for (int col = 0; col < sheet.getColumns(); ++col)
+                        {
+                            string colname = GetStringFromCell(sheet, cst_RowForName, col, name);
+                            string typname = GetStringFromCell(sheet, cst_RowForType, col, name);
+
+                            if (colname.Equals("") || typname.Equals(""))
+                                continue;
+
+                            if(typname.Equals("int"))
+                                W2F(4, writer, "conf." + colname + " = read.GetInt32(index_" + colname + ");");
+					        else if(typname.Equals("long"))
+                                W2F(4, writer, "conf." + colname + " = read.GetInt64(index_" + colname + ");");
+					        else if(typname.Equals("float"))
+                                W2F(4, writer, "conf." + colname + " = read.GetFloat(index_" + colname + ");");
+					        else if(typname.Equals("double"))
+                                W2F(4, writer, "conf." + colname + " = read.GetDouble(index_" + colname + ");");
+					        else if(typname.Equals("string"))
+                                W2F(4, writer, "conf." + colname + " = read.GetString(index_" + colname + ");");
+					        else if(typname.Equals("bool"))
+                                W2F(4, writer, "conf." + colname + " = read.GetBoolean(index_" + colname + ");");
+                            else if(typname.Equals("string[]"))
+					        {
+						        W2F(4, writer, "{");
+							        W2F(5, writer, "string __tmp = read.GetString(index_" + colname + ");");
+                                    W2F(5, writer, "conf." + colname + " = __tmp.Split(new char [] {','});");
+						        W2F(4, writer, "}");
+					        }
+                            else if(typname.Equals("float[]"))
+					        {
+						        W2F(4, writer, "{");
+                                    W2F(5, writer, "string __tmp = read.GetString(index_" + colname + ");");
+                                    W2F(5, writer, "string[] stringList = __tmp.Split(new char [] {','});");
+                                    W2F(5, writer, "conf." + colname + " = new float[stringList.Length];");
+                                    W2F(5, writer, "for(int i = 0; i < stringList.Length; ++i)");
+								        W2F(6, writer, "conf." + colname + "[i] = float.Parse(stringList[i]);");
+						        W2F(4, writer, "}");
+					        }
+                            else if(typname.Equals("int[]"))
+					        {
+                                W2F(4, writer, "{");
+                                    W2F(5, writer, "string __tmp = read.GetString(index_" + colname + ");");
+                                    W2F(5, writer, "string[] stringList = __tmp.Split(new char [] {','});");
+                                    W2F(5, writer, "conf." + colname + " = new int[stringList.Length];");
+                                    W2F(5, writer, "for(int i = 0; i < stringList.Length; ++i)");
+                                        W2F(6, writer, "conf." + colname + "[i] = int.Parse(stringList[i]);");
+                                W2F(4, writer, "}");
+					        }
+                                /*
+                            else if(typname.Contains("string["))
+                            {
+                                if (typname.Equals("string[]"))
+                                {
+                                    W2F(4, writer, "{");
+                                        W2F(5, writer, "string __tmp = csv.GetString(index_" + colname + ");");
+                                        W2F(5, writer, "conf." + colname + ".AddRange(__tmp.Split(new char [] {','}));");
+                                        //W2F(4, writer, "tokenize(__tmp,conf." + colname + ",\",\",\"\",\"\\\"\");;");
+                                    W2F(4, writer, "}");
+                                }
+                                else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
+                                {
+                                    int val = int.Parse(typname.Substring(7, typname.Length - 8));
+
+                                    W2F(3, writer, "{");
+                                        W2F(4, writer, "std::vector<std::string> vals;");
+                                        W2F(4, writer, "const char* __tmp = csv.get_str(row,index_" + colname + ");");
+                                        W2F(4, writer, "tokenize(__tmp,vals,\",\",\"\",\"\\\"\");;");
+                                        W2F(4, writer, "pwassertn(vals.size() == " + val +");");
+                                        W2F(4, writer, "for(size_t i = 0; i < vals.size(); ++i)");
+                                            W2F(5, writer, "conf." + colname + "[i] = vals[i];");
+                                    W2F(3, writer, "}");
+                                }
+                            }
+                            else if (typname.Contains("float["))
+                            {
+                                if (typname.Equals("float[]"))
+                                {
+                                    W2F(3, writer, "{");
+                                        W2F(4, writer, "std::vector<std::string> vals;");
+                                        W2F(4, writer, "const char* __tmp = csv.get_str(row,index_" + colname + ");");
+                                        W2F(4, writer, "tokenize(__tmp,vals,\",\",\"\",\"\\\"\");;");
+                                        W2F(4, writer, "for(size_t i = 0; i < vals.size(); ++i)");
+                                            W2F(5, writer, "conf." + colname + ".push_back(pwutils::atof(vals[i].c_str()));");
+                                    W2F(3, writer, "}");
+                                }
+                                else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
+                                {
+                                    int val = int.Parse(typname.Substring(6, typname.Length - 7));
+
+                                    W2F(3, writer, "{");
+                                        W2F(4, writer, "std::vector<std::string> vals;");
+                                        W2F(4, writer, "const char* __tmp = csv.get_str(row,index_" + colname + ");");
+                                        W2F(4, writer, "tokenize(__tmp,vals,\",\",\"\",\"\\\"\");;");
+                                        W2F(4, writer, "pwassertn(vals.size() == " + val + ");");
+                                        W2F(4, writer, "for(size_t i = 0; i < vals.size(); ++i)");
+                                        W2F(5, writer, "conf." + colname + "[i] = pwutils::atof(vals[i].c_str());");
+                                    W2F(3, writer, "}");
+                                }   
+                            }
+                            else if (typname.Contains("int["))
+                            {
+                                if (typname.Equals("int[]"))
+                                {
+                                    W2F(3, writer, "{");
+                                        W2F(4, writer, "std::vector<std::string> vals;");
+                                        W2F(4, writer, "const char* __tmp = csv.get_str(row,index_" + colname + ");");
+                                        W2F(4, writer, "tokenize(__tmp,vals,\",\",\"\",\"\\\"\");;");
+                                        W2F(4, writer, "for(size_t i = 0; i < vals.size(); ++i)");
+                                            W2F(5, writer, "conf." + colname + ".push_back(pwutils::atoi(vals[i].c_str()));");
+                                    W2F(3, writer, "}");
+                                }
+                                else if (typname.Substring(typname.Length - 1, 1).Equals("]"))
+                                {
+                                    int val = int.Parse(typname.Substring(4, typname.Length - 5));
+                                    
+                                    W2F(3, writer, "{");
+                                        W2F(4, writer, "std::vector<std::string> vals;");
+                                        W2F(4, writer, "const char* __tmp = csv.get_str(row,index_" + colname + ");");
+                                        W2F(4, writer, "tokenize(__tmp,vals,\",\",\"\",\"\\\"\");;");
+                                        W2F(4, writer, "pwassertn(vals.size() == " + val + ");");
+                                        W2F(4, writer, "for(size_t i = 0; i < vals.size(); ++i)");
+                                            W2F(5, writer, "conf." + colname + "[i] = pwutils::atoi(vals[i].c_str());");
+                                    W2F(3, writer, "}");
+                                }
+                            }*/
+                        }
+                        W2F(3, writer, "m_vtConfigures.Add(conf);");
+                    W2F(3, writer, "}");
+                    W2F(3, writer, "read.Close();");
+			        W2F(3, writer, "return true;");
             //W2F(3, writer, "return LoadFrom(filename.c_str());");
             W2F(2, writer, "}");
             W2F(2, writer, "public " + structname + " Get(int row)");
@@ -543,7 +703,7 @@ namespace gen_csv
             W2F(2, writer, "{");
             W2F(3, writer, "return m_vtConfigures.Count;");
             W2F(2, writer, "}");
-            W2F(2, writer, "private List<" + structname + "> m_vtConfigures;");
+            W2F(2, writer, "private List<" + structname + "> m_vtConfigures = new List<" + structname + ">();");
             W2F(1, writer, "};");
 
             W2F(0, writer, "}");

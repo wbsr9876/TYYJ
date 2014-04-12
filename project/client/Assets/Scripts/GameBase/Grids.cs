@@ -12,6 +12,7 @@ using UnityEngine;
 
 namespace GameBase
 {
+
 	public class Grids
 	{
 		private int m_nX = 9;

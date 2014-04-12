@@ -1,29 +1,69 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
+using System.IO;
+using System.Data;
+using System.Runtime.InteropServices;
+using LumenWorks.Framework.IO.Csv;
 
 namespace ConfigData
 {
 
 	public class DataCreaturePettyAction
 	{
-		int id;	// Ë÷ÒıÊı×ÖID
-		string index_name;	// Ë÷ÒıÖĞÎÄÃû³Æ
-		int type;	// ÀàĞÍ(0:¸ÅÂÊ1:ĞòÁĞ)
-		List<string> sequence;	// Ğ¡¶¯×÷ÁĞ
-		List<int> probability;	// ¸ÅÂÊÁĞ(¸ÅÂÊÓĞĞ§)
+		public int id;	// ç´¢å¼•æ•°å­—ID
+		public string index_name;	// ç´¢å¼•ä¸­æ–‡åç§°
+		public int type;	// ç±»å‹(0:æ¦‚ç‡1:åºåˆ—)
+		public string[] sequence;	// å°åŠ¨ä½œåˆ—
+		public int[] probability;	// æ¦‚ç‡åˆ—(æ¦‚ç‡æœ‰æ•ˆ)
 	};
 	
 	/* 
 	@class CreaturePettyAction 
 	@author tool GenCSV
-	@date 2014/4/7 10:43:51
+	@date 2014/4/13 3:19:44
 	@file ConfigCreaturePettyAction.cs
-	@brief ´ÓCreaturePettyActionÎÄ¼şÖĞ×Ô¶¯Éú³ÉµÄÅäÖÃÀà
+	@brief ä»CreaturePettyActionæ–‡ä»¶ä¸­è‡ªåŠ¨ç”Ÿæˆçš„é…ç½®ç±»
 	*/ 
 	public class CreaturePettyAction
 	{
 		public bool LoadFrom(string filename)
 		{
-			return false;
+			CsvReader csv = new CsvReader(new StreamReader(filename),true,'\t','\"','\0','#',ValueTrimmingOptions.All);
+			int index_id = csv.GetFieldIndex("id");
+			
+			int index_index_name = csv.GetFieldIndex("index_name");
+			
+			int index_type = csv.GetFieldIndex("type");
+			
+			int index_sequence = csv.GetFieldIndex("sequence");
+			
+			int index_probability = csv.GetFieldIndex("probability");
+			
+			
+			IDataReader read = csv;
+			read.Read();
+			read.Read();
+			read.Read();
+			while(read.Read())
+			{
+				DataCreaturePettyAction conf = new DataCreaturePettyAction();
+				conf.id = read.GetInt32(index_id);
+				conf.index_name = read.GetString(index_index_name);
+				conf.type = read.GetInt32(index_type);
+				{
+					string __tmp = read.GetString(index_sequence);
+					conf.sequence = __tmp.Split(new char [] {','});
+				}
+				{
+					string __tmp = read.GetString(index_probability);
+					string[] stringList = __tmp.Split(new char [] {','});
+					conf.probability = new int[stringList.Length];
+					for(int i = 0; i < stringList.Length; ++i)
+						conf.probability[i] = int.Parse(stringList[i]);
+				}
+			m_vtConfigures.Add(conf);
+			}
+			read.Close();
+			return true;
 		}
 		public DataCreaturePettyAction Get(int row)
 		{
@@ -33,7 +73,7 @@ namespace ConfigData
 		{
 			return m_vtConfigures.Count;
 		}
-		private List<DataCreaturePettyAction> m_vtConfigures;
+		private List<DataCreaturePettyAction> m_vtConfigures = new List<DataCreaturePettyAction>();
 	};
 }
 

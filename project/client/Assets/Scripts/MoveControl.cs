@@ -1,17 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GameBase;
+using ConfigData;
 
 public class MoveControl : MonoBehaviour {
 
 	[HideInInspector]
 	private bool m_bDragging = false;
 	private Vector3 m_oldPos;
-	private GameObject m_background;
+	private Grids m_grids = null;
 	// Use this for initialization
 	void Start () 
 	{
-		m_background = GameObject.FindWithTag("background");
+		m_grids = GameObject.FindWithTag("background").GetComponent<GridsControl>().m_grids;
+		//测试代码开始，教学如何加载配置文件并读取
+		CreaturePettyAction conf = new CreaturePettyAction();
+		conf.LoadFrom(Application.dataPath + "/Data/ConfigCreaturePettyAction.csv");
+		DataCreaturePettyAction test= conf.Get(0);
+		print(test.index_name);
+		print(test.probability[0]);
+		//测试代码结束
 	}
 	
 	// Update is called once per frame
@@ -35,10 +43,10 @@ public class MoveControl : MonoBehaviour {
 	void OnMouseUp()
 	{
 		m_bDragging = false; 
-		if(m_background)
+		if(!m_grids.Equals(null))
 		{
-			GridsControl gc = m_background.GetComponent<GridsControl>();
-			Rect rect = gc.m_grids.GetGrid(transform.position);
+			//GridsControl gc = m_background.GetComponent<GridsControl>();
+			Rect rect = m_grids.GetGrid(transform.position);
 			Vector3 newPos;
 			if(rect.width < 0.1)
 			{
