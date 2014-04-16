@@ -3,9 +3,14 @@ using System.Collections;
 
 public class WindowTest : MonoBehaviour {
 
-	private Rect WindowRect = new Rect(10,60,120,50);
-	private bool WindowShowOrNot  = true;
+	public Texture iconTexture;
+	private Rect WindowRect = new Rect(10,60,300,50);
+	private bool WindowShowOrNot  = false;
 
+	void Start()
+	{
+		WindowShowOrNot = true;
+	}
 	void OnGUI () 
 	{
 		WindowShowOrNot = GUI.Toggle (new Rect (10, 10, 100, 20), WindowShowOrNot, "显示窗口");
@@ -18,6 +23,8 @@ public class WindowTest : MonoBehaviour {
 		if (GUI.Button(new Rect(10,20,100,20),"WindowButton"))
 
 			Debug.Log ("1");
+		if(iconTexture)
+			GUI.Button(new Rect(120,10,iconTexture.width,iconTexture.height),iconTexture);
 
 		GUI.DragWindow (new Rect (0, 0, 10000, 10000));
 	}

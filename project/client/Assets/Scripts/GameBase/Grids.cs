@@ -15,48 +15,65 @@ namespace GameBase
 
 	public class Grids
 	{
-		private int m_nX = 9;
-		private int m_nY = 5;
-		private Rect m_rect;
+		private int maxX;
+		private int maxY;
+		private Rect gridsRect;
 		private Vector2 cellSize;
+		private Grid[,] gridList;
 
 		public Grids ()
 		{
 		}
 
-		public Grids(Rect rect,int nX,int nY)
+		public Grids(Rect rect,int x,int y)
 		{
-			m_nX = nX;
-			m_nY = nY;
-			m_rect = rect;
-			cellSize.x = rect.width / nX;
-			cellSize.y = rect.height / nY;
-		}
-
-		public Rect GetGrid(int nX,int nY)
-		{
-			if (nX >= m_nX || nX < 0 || nY >= m_nY || nY < 0) 
+			maxX = x;
+			maxY = y;
+			gridsRect = rect;
+			cellSize.x = gridsRect.width / x;
+			cellSize.y = gridsRect.height / y;
+			gridList = new Grid[x,y];
+			for (int i = 0; i < maxX; i++) 
 			{
-				return new Rect();
+				for (int j = 0; j < maxY; j++) 
+				{
+					gridList[i,j] = new Grid(i,j,GetRect(i,j));
+				}
 			}
-			return new Rect (m_rect.x + cellSize.x * nX, m_rect.y + cellSize.y * nY, cellSize.x, cellSize.y);
 		}
 
-		public Rect GetGrid(Vector2 pos)
+		private Rect GetRect(int x,int y)
 		{
-			int nX = GetXIndex(pos.x);
-			int nY = GetYIndex(pos.y);
-			return GetGrid (nX, nY);
+			if (x >= maxX || x < 0 || y >= maxY || y < 0) 
+			{
+				return default(Rect);
+			}
+			return new Rect (gridsRect.x + cellSize.x * x, gridsRect.y + cellSize.y * y, cellSize.x, cellSize.y);
 		}
 
-		public int GetXIndex(float fX)
+		public Grid GetGrid(int x,int y)
 		{
-			return (int)((fX-m_rect.x) / cellSize.x);
+			if (x >= maxX || x < 0 || y >= maxY || y < 0) 
+			{
+				return null;
+			}
+			return gridList[x,y];
+		}
+		public Grid GetGrid(Vector2 pos)
+		{
+			int x = GetXIndex(pos.x);
+			int y = GetYIndex(pos.y);
+			return GetGrid(x,y);
 		}
 
-		public int GetYIndex(float fY)
+		public int GetXIndex(float x)
 		{
-			return (int)((fY-m_rect.y) / cellSize.y);
+			return (int)((x-gridsRect.x) / cellSize.x);
+		}
+
+		public int GetYIndex(float y)
+		{
+			return (int)((y-gridsRect.y) / cellSize.y);
 		}
 	}
 }
