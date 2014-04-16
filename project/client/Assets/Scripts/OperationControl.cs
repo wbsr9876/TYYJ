@@ -9,22 +9,12 @@ public class OperationControl : MonoBehaviour {
 	[HideInInspector]
 	private Grids grids;
 	private bool dragging = false;
-	private Vector3 oldPos;
 	private UnitControl unit = null;
 	private List<GameObject> rangeList = new List<GameObject>();
 	// Use this for initialization
 	void Start () 
 	{	unit = GetComponent<UnitControl>();
-		grids = GameObject.FindWithTag("background").GetComponent<GridsControl>().SceneGrids;
-		/*
-		//测试代码开始，教学如何加载配置文件并读取
-		CreaturePettyAction conf = new CreaturePettyAction();
-		conf.LoadFrom(Application.dataPath + "/Data/ConfigCreaturePettyAction.csv");
-		DataCreaturePettyAction test= conf.Get(0);
-		print(test.index_name);
-		print(test.probability[0]);
-		//测试代码结束
-		*/
+		grids = GameObject.FindWithTag("Main").GetComponent<GridsControl>().SceneGrids;
 	}
 	
 	// Update is called once per frame

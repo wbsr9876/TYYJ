@@ -26,6 +26,11 @@ namespace GameBase
 		}
 		public void Update()
 		{
+			while(m_nDirtyHeap == m_nCurrentHeap)
+			{
+				//to do;
+				m_nDirtyHeap++;
+			}
 
 		}
 		private void SetTime(float fDelta)

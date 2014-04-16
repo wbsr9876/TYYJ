@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GameBase;
+using ConfigData;
 
 public class UnitControl: MonoBehaviour {
 
+	public int unitIndex;
 	private Grid pos;
 	private Grids grids = null;
 	public Grid Pos 
@@ -32,11 +34,17 @@ public class UnitControl: MonoBehaviour {
 			return moveRange;
 		}
 	}
-
+	
 	// Use this for initialization
 	void Start () 
 	{
-		grids = GameObject.FindWithTag("background").GetComponent<GridsControl>().SceneGrids;
+		GameObject main = GameObject.FindWithTag("Main");
+		if(main != null)
+		{
+			grids = main.GetComponent<GridsControl>().SceneGrids;
+			DataUnitProperties data =  (DataUnitProperties)main.GetComponent<ConfigLoader>().UnitPropertiesMap[unitIndex];
+			moveRange = data.move_range;
+		}
 		SetPos(transform.position);
 	}
 	

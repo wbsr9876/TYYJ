@@ -1,8 +1,0 @@
-"id"	"index_name"	"type"	"sequence"	"probability"	
-"索引数字ID"	"索引中文名称"	"类型(0:概率1:序列)"	"小动作列"	"概率列(概率有效)"	
-"int"	"string"	"int"	"string[]"	"int[]"	
-"cs"	"cs"	"cs"	"cs"	"cs"	
-"1"	"通用绕地播放战斗待机"	"1"	"stateofwar"	"100"	
-"2"	"牙突的饶敌人"	"1"	"standby"	"100"	
-"3"	"黑龙出场动画"	"1"	"attack3b"	"100"	
-"4"	"通用绕敌"	"1"	"harass"	"100"	
