@@ -12,7 +12,7 @@ namespace GameBase
 {
 	public class Timer:IComparable
 	{
-		public delegate int OnTimeHandle();
+		public delegate void OnTimeHandle();
 		public event OnTimeHandle timerEvent;
 		private float absTime;
 		public Timer (float time,OnTimeHandle newEvent)

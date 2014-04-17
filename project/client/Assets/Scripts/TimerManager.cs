@@ -15,12 +15,14 @@ public class TimerManager : MonoBehaviour {
 	
 	}
 
-	void OnTime()
+	private void OnTime()
 	{
+		print ("OnTime");
 		Timer t = timerHeap.RemoveMin();
+		t.OnTime();
 	}
 
-	void SetTimer(float time,Timer.OnTimeHandle handle)
+	public void SetTimer(float time,Timer.OnTimeHandle handle)
 	{
 		timerHeap.Insert(new Timer(Time.time + time,handle));
 		Invoke ("OnTime", time);

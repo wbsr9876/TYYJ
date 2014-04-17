@@ -35,9 +35,9 @@ namespace GameBase
 		}
 
 		private Rect rect;
-		private GameObject inner;
+		private UnitProperty inner;
 
-		public GameObject Inner 
+		public UnitProperty Inner 
 		{
 			get 
 			{

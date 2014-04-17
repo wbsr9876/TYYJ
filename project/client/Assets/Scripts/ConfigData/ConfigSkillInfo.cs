@@ -10,13 +10,14 @@ namespace ConfigData
 	public class DataSkillInfo
 	{
 		public int id;	// 索引数字ID
-		public string index_name;	// 索引名称
+		public string index_name;	// 索引中文名称
+		public float cool_down;	// 冷却时间
 	};
 	
 	/* 
 	@class SkillInfo 
 	@author tool GenCSV
-	@date 2014/4/17 16:13:43
+	@date 2014/4/18 2:24:10
 	@file ConfigSkillInfo.cs
 	@brief 从SkillInfo文件中自动生成的配置类
 	*/ 
@@ -29,6 +30,8 @@ namespace ConfigData
 			
 			int index_index_name = csv.GetFieldIndex("index_name");
 			
+			int index_cool_down = csv.GetFieldIndex("cool_down");
+			
 			
 			IDataReader read = csv;
 			read.Read();
@@ -39,6 +42,7 @@ namespace ConfigData
 				DataSkillInfo conf = new DataSkillInfo();
 				conf.id = read.GetInt32(index_id);
 				conf.index_name = read.GetString(index_index_name);
+				conf.cool_down = read.GetFloat(index_cool_down);
 			m_vtConfigures.Add(conf);
 			}
 			read.Close();

@@ -19,7 +19,14 @@ namespace GameBase
 		}
 		public bool Insert(T value)
 		{
-			m_heap[nCurrentSize] = value;
+			if(nCurrentSize == m_heap.Count)
+			{
+				m_heap.Add(value);
+			}
+			else if(nCurrentSize < m_heap.Count)
+			{
+				m_heap[nCurrentSize] = value;
+			}
 			FilterUp(nCurrentSize++);
 			return true;
 		}

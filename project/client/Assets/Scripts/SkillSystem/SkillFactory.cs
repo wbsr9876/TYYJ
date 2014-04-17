@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using ConfigData;
+using GameBase;
 
 namespace SkillSystem
 {
@@ -19,12 +20,12 @@ namespace SkillSystem
 		{
 		}
 
-		public Skill Create(int id)
+		public Skill Create(UnitProperty unit,int id)
 		{
 			switch (id) 
 			{
 			case 1:
-				return new NormalAttack((DataSkillInfo)ConfigDataManager.Singleton.SkillInfoMap[id]);
+				return new NormalAttack(unit,(DataSkillInfo)ConfigDataManager.Singleton.SkillInfoMap[id]);
 			default:
 				break;
 			}

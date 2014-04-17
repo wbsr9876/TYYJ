@@ -31,7 +31,7 @@ public class OperationControl : MonoBehaviour {
 	void OnMouseDown()
 	{
 		dragging = true;
-		ShowRange(unit.MoveRange,shader,Color.green,Color.red);
+		ShowRange(unit.Property.MoveRange,shader,Color.green,Color.red);
 	}
 
 	void OnMouseUp()
@@ -44,17 +44,17 @@ public class OperationControl : MonoBehaviour {
 			Grid newGrid = grids.GetGrid(transform.position);
 
 			bool bMoved = true;
-			if(newGrid == null || !unit.CanMoveTo(newGrid))
+			if(newGrid == null || !unit.Property.CanMoveTo(newGrid))
 			{
-				newGrid = unit.Pos;
+				newGrid = unit.Property.Pos;
 				bMoved = false;
 			}
-			print ("Grids:" + newGrid.PosX + "," + newGrid.PosY);
+			//print ("Grids:" + newGrid.PosX + "," + newGrid.PosY);
 			Vector3 newPos = new Vector3(newGrid.Rect.center.x,newGrid.Rect.center.y);
 			transform.position = newPos;
 			if(bMoved)
 			{
-				unit.MoveTo(newGrid);
+				unit.Property.MoveTo(newGrid);
 			}
 
 
@@ -80,7 +80,7 @@ public class OperationControl : MonoBehaviour {
 				{
 					continue;
 				}
-				Grid pos = grids.GetGrid(unit.Pos.PosX + i,unit.Pos.PosY + j);
+				Grid pos = grids.GetGrid(unit.Property.Pos.PosX + i,unit.Property.Pos.PosY + j);
 				if(pos != null)
 				{
 					GameObject go = (GameObject)Instantiate(tag,pos.Rect.center,transform.rotation);

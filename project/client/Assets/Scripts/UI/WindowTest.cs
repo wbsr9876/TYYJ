@@ -24,7 +24,13 @@ public class WindowTest : MonoBehaviour {
 
 			Debug.Log ("1");
 		if(iconTexture)
-			GUI.Button(new Rect(120,10,iconTexture.width,iconTexture.height),iconTexture);
+		{
+
+			if(GUI.Button(new Rect(120,10,iconTexture.width,iconTexture.height),iconTexture))
+			{
+				GameObject.FindWithTag("Player").GetComponent<UnitControl>().Property.UseSkill(0);
+			}
+		}
 
 		GUI.DragWindow (new Rect (0, 0, 10000, 10000));
 	}
