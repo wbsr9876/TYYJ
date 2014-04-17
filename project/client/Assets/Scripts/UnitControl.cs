@@ -2,12 +2,19 @@
 using System.Collections;
 using GameBase;
 using ConfigData;
+using SkillSystem;
 
 public class UnitControl: MonoBehaviour {
 
 	public int unitIndex;
-	private Grid pos;
 	private Grids grids = null;
+	//prop
+	private Grid pos;
+	private int moveRange = 2;
+	private int maxHp;
+	private int hp;
+	private Hashtable skillSocket = new Hashtable();
+
 	public Grid Pos 
 	{
 		get 
@@ -24,9 +31,7 @@ public class UnitControl: MonoBehaviour {
 			pos.Inner = gameObject;
 		}
 	}
-
-	private int moveRange = 2;
-
+	
 	public int MoveRange 
 	{
 		get 
@@ -42,8 +47,9 @@ public class UnitControl: MonoBehaviour {
 		if(main != null)
 		{
 			grids = main.GetComponent<GridsControl>().SceneGrids;
-			DataUnitProperties data =  (DataUnitProperties)main.GetComponent<ConfigLoader>().UnitPropertiesMap[unitIndex];
-			moveRange = data.move_range;
+			DataUnitProperties data =  (DataUnitProperties)ConfigDataManager.Singleton.UnitPropertiesMap[unitIndex];
+			//test
+			skillSocket.Add("NormalAttack",SkillFactory.Singleton.Create(1));
 		}
 		SetPos(transform.position);
 	}
@@ -71,5 +77,15 @@ public class UnitControl: MonoBehaviour {
 		Pos = target;
 		return true;
 
+	}
+	public bool UseSkill(int index)
+	{
+		if (index >= skillSocket.Count) 
+		{
+			return false;
+		}
+
+		// do skill
+		return true;
 	}
 }

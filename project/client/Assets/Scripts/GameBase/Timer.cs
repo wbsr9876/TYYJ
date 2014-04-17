@@ -10,35 +10,43 @@
 using System;
 namespace GameBase
 {
-	public class Timer
+	public class Timer:IComparable
 	{
-		public Timer ()
+		public delegate int OnTimeHandle();
+		public event OnTimeHandle timerEvent;
+		private float absTime;
+		public Timer (float time,OnTimeHandle newEvent)
 		{
+			timerEvent += newEvent;
+			absTime = time;
 		}
 
-		public virtual bool OnTimer()
+		public virtual bool OnTime()
 		{
+			if (timerEvent != null) 
+			{
+				timerEvent();
+			}
 			return false;
-		}
-
-		public void Start()
-		{
 		}
 
 		public void Stop()
 		{
+			timerEvent = null;
 		}
-
-		public void Pause()
+		public int CompareTo (object obj)
 		{
+			if (absTime > ((Timer)obj).absTime) 
+			{
+				return 1;
+			}
+			else if (absTime < ((Timer)obj).absTime)
+			{
+				return -1;
+			}
+			return 0;
+			
 		}
-
-		public void Continue()
-		{
-		}
-
-		public float m_fTime;
-
 	}
 }
 
