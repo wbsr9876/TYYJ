@@ -46,7 +46,7 @@ public class UnitControl: MonoBehaviour {
 		GameObject main = GameObject.FindWithTag("Main");
 		if(main != null)
 		{
-			grids = main.GetComponent<GridsControl>().SceneGrids;
+			grids = GridsManager.Singleton.SceneGrids;
 			DataUnitProperties data =  (DataUnitProperties)ConfigDataManager.Singleton.UnitPropertiesMap[unitIndex];
 			//test
 			skillSocket.Add("NormalAttack",SkillFactory.Singleton.Create(1));

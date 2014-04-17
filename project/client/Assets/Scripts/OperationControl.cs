@@ -14,7 +14,7 @@ public class OperationControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{	unit = GetComponent<UnitControl>();
-		grids = GameObject.FindWithTag("Main").GetComponent<GridsControl>().SceneGrids;
+		grids = GridsManager.Singleton.SceneGrids;
 	}
 	
 	// Update is called once per frame
