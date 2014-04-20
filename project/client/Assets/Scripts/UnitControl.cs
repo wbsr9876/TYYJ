@@ -9,8 +9,10 @@ public class UnitControl: MonoBehaviour {
 	public int unitIndex;
 	private UnitProperty property;
 
-	public UnitProperty Property {
-		get {
+	public UnitProperty Property 
+	{
+		get 
+		{
 			return property;
 		}
 	}	
