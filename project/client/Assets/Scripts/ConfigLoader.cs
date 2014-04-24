@@ -2,11 +2,12 @@
 using System.Collections;
 using ConfigData;
 
-public class ConfigLoader : MonoBehaviour {
-		
+public class ConfigLoader : MonoBehaviour 
+{
+	private bool loaded = false;
 	void Awake()
 	{
-		ConfigDataManager.Singleton.Load (Application.dataPath);
+		loaded = ConfigDataManager.Singleton.Load (Application.streamingAssetsPath);
 	}
 	// Use this for initialization
 	void Start () {
@@ -17,4 +18,5 @@ public class ConfigLoader : MonoBehaviour {
 	void Update () {
 	
 	}
+	
 }

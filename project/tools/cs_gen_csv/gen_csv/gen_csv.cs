@@ -187,7 +187,7 @@ namespace gen_csv
 
             strSearchDir = m_strProjectPath + "config\\";
             strCssDir = m_strProjectPath + "client\\Assets\\Scripts\\ConfigData\\";
-            strCsvsDir = m_strProjectPath + "client\\Assets\\Data\\";
+            strCsvsDir = m_strProjectPath + "client\\Assets\\StreamingAssets\\Data\\";
 
             if (!Directory.Exists(strSearchDir))
             {
@@ -539,7 +539,7 @@ namespace gen_csv
             W2F(1, writer, "{");
             W2F(2, writer, "public bool LoadFrom(string filename)");
             W2F(2, writer, "{");
-            W2F(3, writer, "CsvReader csv = new CsvReader(new StreamReader(filename),true,'\\t','\\\"','\\0','#',ValueTrimmingOptions.All);");
+            W2F(3, writer, "CsvReader csv = CsvReaderFactory.Singleton.Create (filename);");
 			        //W2F(2, writer, "if(csv.load(filename) != 0)");
                        // W2F(3, writer, "return false;");
                     for (int col = 0; col < sheet.getColumns(); ++col)

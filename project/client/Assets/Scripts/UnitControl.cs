@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GameBase;
-using ConfigData;
 using SkillSystem;
 
 public class UnitControl: MonoBehaviour {
@@ -21,7 +20,7 @@ public class UnitControl: MonoBehaviour {
 	void Start () 
 	{
 		property = new UnitProperty(gameObject,unitIndex);
-		property.SetPos(transform.position);
+		property.InitPos(transform.position);
 	}
 	
 	// Update is called once per frame
@@ -45,7 +44,12 @@ public class UnitControl: MonoBehaviour {
 		//print ("s:"+screenPos2D);
 		Vector2 guiPos = GUIUtility.ScreenToGUIPoint(screenPos2D);
 		//print("g:" + guiPos);
-		string hpString = property.Hp.ToString() + "/" + property.MaxHp.ToString();
-		GUI.Label(new Rect(guiPos.x - 25,(float)Screen.height - guiPos.y - 75,100,30),hpString);
+		if (property != null) 
+		{
+			string hpString = property.Hp.ToString() + "/" + property.MaxHp.ToString();
+			GUI.Label(new Rect(guiPos.x - 25,(float)Screen.height - guiPos.y - 75,100,30),hpString);
+		}
+
+
 	}
 }

@@ -110,12 +110,16 @@ namespace GameBase
 			}
 
 		}
-		public void SetPos(Vector3 posVector)
+		public void InitPos(Vector3 posVector)
 		{
 			Pos = GridsManager.Singleton.SceneGrids.GetGrid(posVector);
 		}
 		public bool CanMoveTo(Grid target)
 		{
+			if (target == null || target.Inner != null) 
+			{
+				return false;
+			}
 			return (Mathf.Abs(target.PosX - pos.PosX) + Mathf.Abs(target.PosY - pos.PosY) <= moveRange) && (target.Inner == null);
 		}
 		public bool MoveTo(Grid target)
@@ -124,6 +128,7 @@ namespace GameBase
 			{
 				return false;
 			}
+
 			Pos = target;
 			return true;
 			

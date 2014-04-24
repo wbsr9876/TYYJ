@@ -21,7 +21,7 @@ namespace ConfigData
 	/* 
 	@class UnitProperties 
 	@author tool GenCSV
-	@date 2014/4/18 2:24:10
+	@date 2014/4/24 11:18:29
 	@file ConfigUnitProperties.cs
 	@brief 从UnitProperties文件中自动生成的配置类
 	*/ 
@@ -29,7 +29,7 @@ namespace ConfigData
 	{
 		public bool LoadFrom(string filename)
 		{
-			CsvReader csv = new CsvReader(new StreamReader(filename),true,'\t','\"','\0','#',ValueTrimmingOptions.All);
+			CsvReader csv = CsvReaderFactory.Singleton.Create (filename);
 			int index_id = csv.GetFieldIndex("id");
 			
 			int index_index_name = csv.GetFieldIndex("index_name");
