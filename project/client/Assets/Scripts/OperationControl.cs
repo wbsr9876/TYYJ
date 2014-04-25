@@ -11,9 +11,15 @@ public class OperationControl : MonoBehaviour {
 	private bool dragging = false;
 	private UnitControl unit = null;
 	private List<GameObject> rangeList = new List<GameObject>();
+	private Animator anim;
+	void Awake()
+	{
+		anim = GetComponent<Animator> ();
+		unit = GetComponent<UnitControl>();
+	}
 	// Use this for initialization
 	void Start () 
-	{	unit = GetComponent<UnitControl>();
+	{	
 		grids = GridsManager.Singleton.SceneGrids;
 	}
 	
@@ -32,6 +38,7 @@ public class OperationControl : MonoBehaviour {
 	{
 		dragging = true;
 		ShowRange(unit.Property.MoveRange,shader,Color.green,Color.red);
+		anim.SetTrigger("Jump");
 	}
 
 	void OnMouseUp()

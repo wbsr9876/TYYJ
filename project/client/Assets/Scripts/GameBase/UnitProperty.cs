@@ -11,6 +11,12 @@ namespace GameBase
 		//private int unitIndex;
 		private GameObject owner;
 
+		public GameObject Owner {
+			get {
+				return owner;
+			}
+		}
+
 		private Grid pos;
 		private int moveRange = 2;
 		private int maxHp;
@@ -96,6 +102,7 @@ namespace GameBase
 		}
 		public UnitProperty (GameObject go,int index)
 		{
+			owner = go;
 			//grids = GridsManager.Singleton.SceneGrids;
 			DataUnitProperties data =  (DataUnitProperties)ConfigDataManager.Singleton.UnitPropertiesMap[index];
 			moveRange = data.move_range;

@@ -51,6 +51,7 @@ namespace SkillSystem
 			coolDown = true;
 			GameObject.FindWithTag("Main").GetComponent<TimerManager>().SetTimer(data.cool_down,HandleCoolDownFinished);
 			//do action then call back do after
+			owner.Owner.GetComponent<Animator>().SetTrigger("Shoot");
 			int damage = Mathf.Min(owner.Atk - target.Def,target.Hp);
 			target.Hp = target.Hp - damage;
 			return true;

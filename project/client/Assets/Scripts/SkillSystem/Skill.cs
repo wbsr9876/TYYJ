@@ -4,7 +4,7 @@ using GameBase;
 
 namespace SkillSystem
 {
-	public class Skill
+	public class Skill:SkillInterface
 	{
 		protected DataSkillInfo data;
 		protected UnitProperty owner;
