@@ -186,7 +186,7 @@ namespace gen_csv
             }
 
             strSearchDir = m_strProjectPath + "config\\";
-            strCssDir = m_strProjectPath + "client\\Assets\\Scripts\\ConfigData\\";
+            strCssDir = m_strProjectPath + "code\\client\\client\\ConfigData\\";
             strCsvsDir = m_strProjectPath + "client\\Assets\\StreamingAssets\\Data\\";
 
             if (!Directory.Exists(strSearchDir))
