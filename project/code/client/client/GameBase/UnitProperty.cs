@@ -140,23 +140,15 @@ namespace GameBase
 			return true;
 			
 		}
-		public bool UseSkill(int index)
-		{
-			if (index >= skillSocket.Count) 
-			{
-				return false;
-			}
-			((Skill)skillSocket[index]).UseSkill();
-			return true;
-		}
-		public bool CanUseSkill(int index)
-		{
-			if (index >= skillSocket.Count) 
-			{
-				return false;
-			}
-			return ((Skill)skillSocket[index]).CanUseSkill();
-		}
+
+        public Skill GetSkill(int index)
+        {
+            if (index >= skillSocket.Count)
+            {
+                return null;
+            }
+            return skillSocket[index];
+        }
 	}
 }
 

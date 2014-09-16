@@ -22,9 +22,11 @@ public class TimerManager : MonoBehaviour {
 		t.OnTime();
 	}
 
-	public void SetTimer(float time,Timer.OnTimeHandle handle)
+	public float SetTimer(float time,Timer.OnTimeHandle handle)
 	{
-		timerHeap.Insert(new Timer(Time.time + time,handle));
+        float finishTime = Time.time + time;
+        timerHeap.Insert(new Timer(finishTime, handle));
 		Invoke ("OnTime", time);
+        return finishTime;
 	}
 }

@@ -12,12 +12,13 @@ namespace ConfigData
 		public int id;	// 索引数字ID
 		public string index_name;	// 索引中文名称
 		public float cool_down;	// 冷却时间
+		public string animation_name;	// 动作名称
 	};
 	
 	/* 
 	@class SkillInfo 
 	@author tool GenCSV
-	@date 2014/9/15 0:54:55
+	@date 2014/9/17 1:09:40
 	@file ConfigSkillInfo.cs
 	@brief 从SkillInfo文件中自动生成的配置类
 	*/ 
@@ -32,6 +33,8 @@ namespace ConfigData
 			
 			int index_cool_down = csv.GetFieldIndex("cool_down");
 			
+			int index_animation_name = csv.GetFieldIndex("animation_name");
+			
 			
 			IDataReader read = csv;
 			read.Read();
@@ -43,6 +46,7 @@ namespace ConfigData
 				conf.id = read.GetInt32(index_id);
 				conf.index_name = read.GetString(index_index_name);
 				conf.cool_down = read.GetFloat(index_cool_down);
+				conf.animation_name = read.GetString(index_animation_name);
 			m_vtConfigures.Add(conf);
 			}
 			read.Close();

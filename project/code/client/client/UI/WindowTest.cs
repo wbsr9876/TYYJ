@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SkillSystem;
 
 public class WindowTest : MonoBehaviour {
 
@@ -20,17 +21,30 @@ public class WindowTest : MonoBehaviour {
 
 	void TestFunction(int id)
 	{
-		if (GUI.Button(new Rect(10,20,100,20),"WindowButton"))
+        if (GUI.Button(new Rect(10, 20, 100, 20), "WindowButton"))
+        {
+            Debug.Log("1");
 
-			Debug.Log ("1");
-		if(iconTexture)
-		{
+        }
+            bool pushed = false;
+			Skill temp = GameObject.FindWithTag("Player").GetComponent<UnitControl>().Property.GetSkill(0);
+            float cd = temp.GetCoolDownRemain();
+            if (iconTexture)
+            {
+                if (cd > 0)
+                {
+                    pushed = GUI.Button(new Rect(120, 10, iconTexture.width, iconTexture.height), cd.ToString("F1"));
+                }
+                else
+                {
+                    pushed = GUI.Button(new Rect(120, 10, iconTexture.width, iconTexture.height), iconTexture);
+                }
+            }
 
-			if(GUI.Button(new Rect(120,10,iconTexture.width,iconTexture.height),iconTexture))
-			{
-				GameObject.FindWithTag("Player").GetComponent<UnitControl>().Property.UseSkill(0);
-			}
-		}
+            if(pushed)
+            {
+                temp.UseSkill();
+            }
 
 		GUI.DragWindow (new Rect (0, 0, 10000, 10000));
 	}

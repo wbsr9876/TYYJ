@@ -21,7 +21,7 @@ namespace ConfigData
 	/* 
 	@class UnitProperties 
 	@author tool GenCSV
-	@date 2014/9/15 0:54:55
+	@date 2014/9/17 1:09:40
 	@file ConfigUnitProperties.cs
 	@brief 从UnitProperties文件中自动生成的配置类
 	*/ 
